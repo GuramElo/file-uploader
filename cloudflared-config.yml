@@ -15,7 +15,7 @@ credentials-file: /root/.cloudflared/<TUNNEL-ID>.json
 ingress:
   # Route for your upload domain
   - hostname: upload.yourdomain.com
-    service: http://localhost:80
+    service: http://localhost:4201
     originRequest:
       noTLSVerify: false
       connectTimeout: 60s
