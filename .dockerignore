@@ -1,0 +1,48 @@
+# Dependencies
+node_modules
+npm-debug.log
+
+# Logs
+logs
+*.log
+
+# Uploads (will be mounted as volume)
+uploads/*
+!uploads/.gitkeep
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+DOCKER.md
+*.md
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PM2
+ecosystem.config.cjs
+.pm2
+
+# Scripts
+setup.sh
+setup-complete.sh

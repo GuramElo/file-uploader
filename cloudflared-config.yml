@@ -1,0 +1,28 @@
+# Cloudflare Tunnel Configuration Template
+#
+# Instructions:
+# 1. Install cloudflared: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/
+# 2. Login: cloudflared tunnel login
+# 3. Create tunnel: cloudflared tunnel create file-uploader
+# 4. Replace <TUNNEL-ID> below with your tunnel ID
+# 5. Save this file as ~/.cloudflared/config.yml
+# 6. Route DNS: cloudflared tunnel route dns file-uploader upload.yourdomain.com
+# 7. Run: cloudflared tunnel run file-uploader
+
+tunnel: <TUNNEL-ID>
+credentials-file: /root/.cloudflared/<TUNNEL-ID>.json
+
+ingress:
+  # Route for your upload domain
+  - hostname: upload.yourdomain.com
+    service: http://localhost:80
+    originRequest:
+      noTLSVerify: false
+      connectTimeout: 60s
+      tlsTimeout: 60s
+      keepAliveConnections: 100
+      keepAliveTimeout: 90s
+      httpHostHeader: upload.yourdomain.com
+
+  # Catch-all rule (required)
+  - service: http_status:404

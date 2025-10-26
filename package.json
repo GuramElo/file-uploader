@@ -1,0 +1,45 @@
+{
+  "name": "file-uploader",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Production-ready file upload server with TUS protocol, Docker, and Nginx",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "NODE_ENV=development nodemon server.js",
+    "cleanup": "node scripts/cleanup.js",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:logs:app": "docker-compose logs -f app",
+    "docker:logs:nginx": "docker-compose logs -f nginx",
+    "docker:restart": "docker-compose restart",
+    "docker:restart:app": "docker-compose restart app",
+    "docker:restart:nginx": "docker-compose restart nginx",
+    "docker:ps": "docker-compose ps",
+    "docker:clean": "docker-compose down -v",
+    "docker:rebuild": "docker-compose down && docker-compose build --no-cache && docker-compose up -d",
+    "pm2:start": "pm2 start ecosystem.config.cjs",
+    "pm2:stop": "pm2 stop file-uploader",
+    "pm2:restart": "pm2 restart file-uploader",
+    "pm2:logs": "pm2 logs file-uploader"
+  },
+  "dependencies": {
+    "@tus/file-store": "^1.4.0",
+    "@tus/server": "^1.6.0",
+    "check-disk-space": "^3.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.2.0",
+    "helmet": "^7.1.0",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,59 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: file-uploader-app
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=3000
+      - UPLOAD_DIR=/app/uploads
+      - MAX_FILE_SIZE=10737418240
+      - MIN_FREE_SPACE=5368709120
+      - CHUNK_SIZE=5242880
+      - ALLOWED_EXTENSIONS=*
+      - CORS_ORIGIN=*
+      - LOG_LEVEL=info
+      - UPLOAD_TIMEOUT=3600000
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    networks:
+      - uploader-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1); }).on('error', () => process.exit(1));"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  nginx:
+    image: nginx:alpine
+    container_name: file-uploader-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      app:
+        condition: service_healthy
+    networks:
+      - uploader-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  uploader-network:
+    driver: bridge
+
+volumes:
+  uploads:
+  logs:
