@@ -42,7 +42,7 @@ const config = {
     host: process.env.HOST || '0.0.0.0',
     port: parseInt(process.env.PORT || '3000', 10),
     uploadDir: process.env.UPLOAD_DIR || path.join(__dirname, 'uploads'),
-    maxFileSize: parseInt(process.env.MAX_FILE_SIZE || '10737418240', 10),
+    maxFileSize: parseInt(process.env.MAX_FILE_SIZE || '107374182400', 10),
     minFreeSpace: parseInt(process.env.MIN_FREE_SPACE || '5368709120', 10),
     chunkSize: parseInt(process.env.CHUNK_SIZE || '5242880', 10),
     allowedExtensions: process.env.ALLOWED_EXTENSIONS === '*' ? null : process.env.ALLOWED_EXTENSIONS?.split(',').filter(Boolean) || null,

@@ -10,7 +10,7 @@ services:
       - HOST=0.0.0.0
       - PORT=3000
       - UPLOAD_DIR=/app/uploads
-      - MAX_FILE_SIZE=10737418240
+      - MAX_FILE_SIZE=107374182400
       - MIN_FREE_SPACE=5368709120
       - CHUNK_SIZE=5242880
       - ALLOWED_EXTENSIONS=*
